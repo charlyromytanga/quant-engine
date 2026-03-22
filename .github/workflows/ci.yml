@@ -1,0 +1,38 @@
+name: C++ Build & Test & Benchmark
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test-benchmark:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ libgtest-dev
+
+    - name: Configure
+      run: cmake -S . -B build
+
+    - name: Build
+      run: cmake --build build -- -j$(nproc)
+
+    - name: Run tests
+      run: ctest --output-on-failure --test-dir build
+
+    - name: Run benchmarks
+      run: |
+        ./build/benchmarks/benchmark_normal_distribution || true
+        ./build/benchmarks/benchmark_spark || true
+        ./build/benchmarks/benchmark_montecarlo || true
+
+    - name: Generate docs
+      run: doxygen docs/Doxyfile
