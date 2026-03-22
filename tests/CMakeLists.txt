@@ -10,7 +10,6 @@ target_link_libraries(test_black_scholes
     GTest::Main
 )
 
-enable_testing()
 
 add_test(NAME BlackScholesTest
          COMMAND test_black_scholes)

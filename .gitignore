@@ -1,0 +1,16 @@
+build/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+docs/build/
+*.o
+*.so
+*.a
+*.out
+*.log
+
+.vscode/
+__pycache__/
+*pyc
+
